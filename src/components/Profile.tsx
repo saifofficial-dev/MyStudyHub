@@ -9,6 +9,7 @@ import { motion } from 'motion/react';
 
 export default function Profile() {
   const details = [
+    { label: "VU LMS ID", value: STUDENT_INFO.studentId, icon: Hash },
     { label: "Father's Name", value: STUDENT_INFO.fatherName, icon: Shield },
     { label: "Registration No", value: STUDENT_INFO.regNo, icon: Hash },
     { label: "Form No", value: STUDENT_INFO.formNo, icon: Shield },
@@ -33,6 +34,7 @@ export default function Profile() {
             </div>
             <h2 className="text-2xl font-bold mb-1 text-center md:text-left">{STUDENT_INFO.name}</h2>
             <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 justify-center md:justify-start">
+               <span className="flex items-center gap-1.5 font-bold text-white"><Hash size={14} className="text-brand-primary" /> {STUDENT_INFO.studentId}</span>
                <span className="flex items-center gap-1.5"><Briefcase size={14} className="text-brand-primary" /> {STUDENT_INFO.program}</span>
                <span className="flex items-center gap-1.5"><Mail size={14} className="text-brand-primary" /> {STUDENT_INFO.email}</span>
             </div>
