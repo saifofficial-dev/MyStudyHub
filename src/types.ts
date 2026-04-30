@@ -40,7 +40,7 @@ export type Task = {
   done: boolean;
 };
 
-export type View = 'dashboard' | 'lectures' | 'schedule' | 'tasks';
+export type View = 'dashboard' | 'lectures' | 'schedule' | 'tasks' | 'profile';
 
 export type AppDB = {
   lec: CourseLecMap;
@@ -55,4 +55,11 @@ export type StudentProfile = {
   semester: number;
   email: string;
   regNo: string;
+  fatherName?: string;
+  campus?: string;
+  cnic?: string;
+  admissionDate?: string;
+  birthDate?: string;
+  gender?: string;
+  formNo?: string;
 };

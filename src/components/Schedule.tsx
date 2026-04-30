@@ -47,25 +47,28 @@ export default function Schedule({ db, setDb }: ScheduleProps) {
                <p className="text-sm text-slate-400 italic">No daily targets set. Add your routine below.</p>
             </div>
           ) : (
-            db.sched.map((s) => (
-              <div key={s.id} className="p-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-blue-50 rounded-xl flex flex-col items-center justify-center border border-blue-100 shadow-sm shadow-blue-100/50">
-                    <span className="text-[8px] font-black text-brand-primary uppercase leading-none">{s.day.substring(0, 3)}</span>
+            db.sched.map((s) => {
+              const course = COURSES.find(c => c.code === s.course);
+              return (
+                <div key={s.id} className="p-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex flex-col items-center justify-center border border-blue-100 shadow-sm shadow-blue-100/50">
+                      <span className="text-[8px] font-black text-brand-primary uppercase leading-none">{s.day.substring(0, 3)}</span>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-800">{s.course} — <span className="font-medium text-slate-500">{course?.name}</span></h4>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{s.cnt} Lectures per day</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-800">{s.course}</h4>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{s.cnt} Lectures per day</p>
-                  </div>
+                  <button 
+                    onClick={() => delSched(s.id)} 
+                    className="px-3 py-1.5 text-[10px] font-black text-rose-500 bg-rose-50 rounded-lg hover:bg-rose-100 transition-colors uppercase tracking-widest border border-rose-100"
+                  >
+                    Remove
+                  </button>
                 </div>
-                <button 
-                  onClick={() => delSched(s.id)} 
-                  className="px-3 py-1.5 text-[10px] font-black text-rose-500 bg-rose-50 rounded-lg hover:bg-rose-100 transition-colors uppercase tracking-widest border border-rose-100"
-                >
-                  Remove
-                </button>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </div>
@@ -84,13 +87,13 @@ export default function Schedule({ db, setDb }: ScheduleProps) {
             </select>
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Course Code</label>
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Course Selection</label>
             <select 
               value={fCourse} 
               onChange={e => setFCourse(e.target.value)} 
               className="bg-slate-800 text-white border border-slate-700 rounded-xl p-3 text-xs focus:ring-2 focus:ring-brand-primary focus:outline-none transition-all"
             >
-              {COURSES.map(c => <option key={c.code} value={c.code}>{c.code} — {c.name.split(' ').slice(0, 2).join(' ')}</option>)}
+              {COURSES.map(c => <option key={c.code} value={c.code}>{c.code} — {c.name}</option>)}
             </select>
           </div>
           <div className="flex flex-col gap-2">

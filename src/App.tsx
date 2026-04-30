@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard';
 import LectureTracker from './components/LectureTracker';
 import Schedule from './components/Schedule';
 import Tasks from './components/Tasks';
+import Profile from './components/Profile';
 
 const INITIAL_DB: AppDB = {
   lec: COURSES.reduce((acc, c) => ({ ...acc, [c.code]: {} }), {}),
@@ -40,6 +41,8 @@ export default function App() {
         return <Schedule db={db} setDb={setDb} />;
       case 'tasks':
         return <Tasks db={db} setDb={setDb} />;
+      case 'profile':
+        return <Profile />;
       default:
         return <Dashboard db={db} />;
     }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { LayoutDashboard, BookOpen, Calendar, CheckCircle2 } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Calendar, CheckCircle2, User } from 'lucide-react';
 import { View } from '../types';
 import { STUDENT_INFO } from '../constants';
 
@@ -19,6 +19,7 @@ export default function Sidebar({ currentView, onViewChange, pendingCount }: Sid
     { id: 'lectures' as View, label: 'Lectures', icon: BookOpen },
     { id: 'schedule' as View, label: 'Schedule', icon: Calendar },
     { id: 'tasks' as View, label: 'Tasks', icon: CheckCircle2, badge: pendingCount },
+    { id: 'profile' as View, label: 'Profile', icon: User },
   ];
 
   return (
