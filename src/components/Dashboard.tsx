@@ -71,39 +71,48 @@ export default function Dashboard({ db }: DashboardProps) {
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {COURSES.map((c, i) => {
-              const wc = getWatchedCount(c.code);
-              const pct = Math.round((wc / c.total) * 100);
-              const courseTasks = db.tasks.filter(t => t.course === c.code);
-              const td = courseTasks.filter(t => t.done).length;
-              
-              return (
-                <motion.div 
-                  key={c.code} 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + (i * 0.05) }}
-                  className="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-black text-brand-primary bg-blue-50 px-2 py-0.5 rounded-full">{c.code}</span>
-                    <span className="text-xs font-bold text-slate-900">{pct}%</span>
-                  </div>
-                  <h4 className="text-sm font-bold text-slate-800 line-clamp-1 mb-4 group-hover:text-brand-primary transition-colors">{c.name}</h4>
-                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden mb-4">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${pct}%` }}
-                      className="h-full bg-brand-primary rounded-full"
-                    />
-                  </div>
-                  <div className="flex items-center gap-4 text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                    <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> {wc}/{c.total} Lec</span>
-                    <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> {td}/{courseTasks.length} Task</span>
-                  </div>
-                </motion.div>
-              );
-            })}
+              {COURSES.map((c, i) => {
+                const wc = getWatchedCount(c.code);
+                const pct = c.total > 0 ? Math.round((wc / c.total) * 100) : 0;
+                const courseTasks = db.tasks.filter(t => t.course === c.code);
+                const td = courseTasks.filter(t => t.done).length;
+                
+                return (
+                  <motion.div 
+                    key={c.code} 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 + (i * 0.05) }}
+                    className="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all group"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-black text-brand-primary bg-blue-50 px-2 py-0.5 rounded-full">{c.code}</span>
+                      {c.total > 0 && <span className="text-xs font-bold text-slate-900">{pct}%</span>}
+                    </div>
+                    <h4 className="text-sm font-bold text-slate-800 line-clamp-1 mb-4 group-hover:text-brand-primary transition-colors">{c.name}</h4>
+                    {c.total > 0 ? (
+                      <>
+                        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden mb-4">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            className="h-full bg-brand-primary rounded-full"
+                          />
+                        </div>
+                        <div className="flex items-center gap-4 text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                          <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> {wc}/{c.total} Lec</span>
+                          <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> {td}/{courseTasks.length} Task</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex items-center gap-4 text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
+                        <span className="flex items-center gap-1 text-brand-primary font-black"><span className="w-1.5 h-1.5 rounded-full bg-brand-primary"></span> Handled via Tasks</span>
+                        <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> {td}/{courseTasks.length} Milestones</span>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
           </div>
         </div>
 

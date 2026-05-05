@@ -18,16 +18,22 @@ export const STUDENT_INFO: StudentProfile = {
   admissionDate: "Mar 11, 2026",
   birthDate: "Sep 10, 2002",
   gender: "Male",
-  formNo: "BW738027"
+  formNo: "BW738027",
+  supervisor: "Dr. Saima Munawar",
+  supervisorEmail: "saima.munawar@vu.edu.pk",
+  supervisorExt: "4727",
+  internshipGroupId: "S26INTERNSHIP4B2BA",
+  avatarUrl: "/profile_pic.jpg"
 };
 
 export const COURSES: Course[] = [
-  { code: 'CS306', name: 'Introduction to Python', total: 45 },
-  { code: 'CS402', name: 'Theory of Automata', total: 45 },
-  { code: 'CS409', name: 'Introduction to Database Administration', total: 45 },
-  { code: 'CS502', name: 'Fundamentals of Algorithms', total: 45 },
-  { code: 'CS604', name: 'Operating Systems', total: 45 },
-  { code: 'CS610', name: 'Computer Networks', total: 45 }
+  { code: 'CS306', name: 'Introduction to Python', total: 112 },
+  { code: 'CS402', name: 'Theory of Automata', total: 48 },
+  { code: 'CS409', name: 'Introduction to Database Administration', total: 250 },
+  { code: 'CS502', name: 'Fundamentals of Algorithms', total: 48 },
+  { code: 'CS604', name: 'Operating Systems', total: 47 },
+  { code: 'CS610', name: 'Computer Networks', total: 46 },
+  { code: 'CSI619', name: 'Field Experience / Internship', total: 0 }
 ];
 
 export const DAYS: DayOfWeek[] = [

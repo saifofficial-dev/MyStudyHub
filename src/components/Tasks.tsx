@@ -161,6 +161,11 @@ export default function Tasks({ db, setDb }: TasksProps) {
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredTasks.map((t, i) => {
                   const ov = t.due && t.due < today && !t.done;
+                  const futureDate = new Date();
+                  futureDate.setDate(futureDate.getDate() + 3);
+                  const soonDate = futureDate.toISOString().split('T')[0];
+                  const isSoon = t.due && !t.done && t.due >= today && t.due <= soonDate;
+
                   return (
                     <motion.div 
                       key={t.id}
@@ -170,22 +175,35 @@ export default function Tasks({ db, setDb }: TasksProps) {
                       className={`group bg-white border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all relative overflow-hidden ${t.done ? 'opacity-50 grayscale' : ''}`}
                     >
                       {ov && <div className="absolute top-0 left-0 w-full h-[3px] bg-rose-500"></div>}
+                      {isSoon && !ov && <div className="absolute top-0 left-0 w-full h-[3px] bg-amber-500"></div>}
                       
                       <div className="flex items-center justify-between mb-4">
                          <div className="flex items-center gap-2">
                            <span className="text-[9px] font-black text-brand-primary bg-blue-50 px-2 py-0.5 rounded-lg uppercase tracking-tight">{t.course}</span>
                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{t.type}</span>
                          </div>
-                         <button 
-                           onClick={() => toggleTask(t.id)} 
-                           className={`w-7 h-7 rounded-lg border-2 transition-all flex items-center justify-center ${t.done ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-100 group-hover:border-brand-primary/30 text-transparent hover:text-brand-primary hover:bg-blue-50'}`}
-                         >
-                           <Check size={16} strokeWidth={3} />
-                         </button>
+                         <div className="flex items-center gap-2">
+                            {ov && (
+                              <span className="flex items-center gap-1 bg-rose-50 text-rose-600 text-[9px] font-black px-2 py-0.5 rounded-lg uppercase tracking-tighter animate-pulse">
+                                <Clock size={10} /> Overdue
+                              </span>
+                            )}
+                            {isSoon && !ov && (
+                              <span className="flex items-center gap-1 bg-amber-50 text-amber-600 text-[9px] font-black px-2 py-0.5 rounded-lg uppercase tracking-tighter">
+                                <Clock size={10} /> Soon
+                              </span>
+                            )}
+                            <button 
+                              onClick={() => toggleTask(t.id)} 
+                              className={`w-7 h-7 rounded-lg border-2 transition-all flex items-center justify-center ${t.done ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-100 group-hover:border-brand-primary/30 text-transparent hover:text-brand-primary hover:bg-blue-50'}`}
+                            >
+                              <Check size={16} strokeWidth={3} />
+                            </button>
+                         </div>
                       </div>
 
                       <h4 className={`text-sm font-bold mb-4 line-clamp-2 ${t.done ? 'text-slate-400 line-through' : 'text-slate-900 group-hover:text-brand-primary transition-colors'}`}>
-                        {t.type} {t.num} ({t.course})
+                        {t.title ? t.title : `${t.type} ${t.num}`} ({t.course})
                       </h4>
 
                       <div className="flex items-start justify-between mt-auto pt-4 border-t border-slate-50">

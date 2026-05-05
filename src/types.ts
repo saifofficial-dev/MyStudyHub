@@ -38,6 +38,7 @@ export type Task = {
   num: string;
   due: string;
   done: boolean;
+  title?: string;
 };
 
 export type View = 'dashboard' | 'lectures' | 'schedule' | 'tasks' | 'profile';
@@ -46,6 +47,7 @@ export type AppDB = {
   lec: CourseLecMap;
   sched: ScheduleItem[];
   tasks: Task[];
+  profile: StudentProfile;
 };
 
 export type StudentProfile = {
@@ -62,4 +64,9 @@ export type StudentProfile = {
   birthDate?: string;
   gender?: string;
   formNo?: string;
+  supervisor?: string;
+  supervisorEmail?: string;
+  supervisorExt?: string;
+  internshipGroupId?: string;
+  avatarUrl?: string;
 };

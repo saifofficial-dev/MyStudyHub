@@ -4,16 +4,16 @@
  */
 
 import { LayoutDashboard, BookOpen, Calendar, CheckCircle2, User } from 'lucide-react';
-import { View } from '../types';
-import { STUDENT_INFO } from '../constants';
+import { StudentProfile, View } from '../types';
 
 interface SidebarProps {
   currentView: View;
   onViewChange: (view: View) => void;
   pendingCount: number;
+  profile: StudentProfile;
 }
 
-export default function Sidebar({ currentView, onViewChange, pendingCount }: SidebarProps) {
+export default function Sidebar({ currentView, onViewChange, pendingCount, profile }: SidebarProps) {
   const menuItems = [
     { id: 'dashboard' as View, label: 'Dashboard', icon: LayoutDashboard },
     { id: 'lectures' as View, label: 'Lectures', icon: BookOpen },
@@ -49,7 +49,7 @@ export default function Sidebar({ currentView, onViewChange, pendingCount }: Sid
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className={`ml-auto px-2 py-0.5 rounded-full text-[10px] font-black ${isActive ? 'bg-white text-brand-primary' : 'bg-slate-800 text-slate-400'}`}>
+                   <span className={`ml-auto px-2 py-0.5 rounded-full text-[10px] font-black ${isActive ? 'bg-white text-brand-primary' : 'bg-slate-800 text-slate-400'}`}>
                     {item.badge}
                   </span>
                 )}
@@ -61,12 +61,21 @@ export default function Sidebar({ currentView, onViewChange, pendingCount }: Sid
       
       <div className="mt-auto p-8 border-t border-slate-800/50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-black text-slate-300">
-            {STUDENT_INFO.name.split(' ').map(n => n[0]).join('')}
-          </div>
+          {profile.avatarUrl ? (
+            <img 
+              src={profile.avatarUrl} 
+              alt={profile.name} 
+              className="w-10 h-10 rounded-full object-cover border border-slate-700 shadow-sm"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-black text-slate-300">
+              {profile.name.split(' ').map(n => n[0]).join('')}
+            </div>
+          )}
           <div className="flex flex-col min-w-0">
-            <span className="text-xs font-bold truncate text-slate-100">{STUDENT_INFO.name}</span>
-            <span className="text-[10px] text-slate-500 font-medium truncate uppercase tracking-tighter">{STUDENT_INFO.studentId}</span>
+            <span className="text-xs font-bold truncate text-slate-100">{profile.name}</span>
+            <span className="text-[10px] text-slate-500 font-medium truncate uppercase tracking-tighter">{profile.studentId}</span>
           </div>
         </div>
       </div>
